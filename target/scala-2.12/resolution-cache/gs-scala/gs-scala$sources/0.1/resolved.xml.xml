@@ -4,7 +4,7 @@
 		module="gs-scala$sources"
 		revision="0.1"
 		status="integration"
-		publication="20180606193328"
+		publication="20180622193637"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>

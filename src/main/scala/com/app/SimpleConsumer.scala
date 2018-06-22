@@ -7,7 +7,6 @@ import kafka.consumer.KafkaStream
 import kafka.utils.Logging
 import org.apache.kafka.clients.consumer.{ConsumerConfig, KafkaConsumer}
 
-import scala.collection.JavaConversions._
 
 
 object SimpleConsumer extends App {
