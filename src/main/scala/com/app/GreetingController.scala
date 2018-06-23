@@ -11,10 +11,19 @@ class GreetingController() {
     /* business logic -> persist to kafka topic
      do try-except here
     */
+    try {
+      val prod = new KafkaProducerExample([inboundObject.id, inboundObject.name], 'test_topic')
+      }
+    } catch {
+        println('error')
+    }
     new ResponseEntity(inboundObject.name, HttpStatus.OK)
   }
   @GetMapping(path = Array("/getmessages"))
-  def getmessages() //response entity would be an outbound object
+  def getmessages(): OutboundObject = {
+    OutboundObject
+  }
+}//response entity would be an outbound object
 
 
 /* GOALS

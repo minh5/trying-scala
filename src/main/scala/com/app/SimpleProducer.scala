@@ -4,27 +4,22 @@ import java.util.{Date, Properties}
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import scala.util.Random
 
-object SimpleProducer(events: String, topics: String, brokers: String) {
-  var events = events
-  var topics = topics
-  var brokers = brokers
+class SimpleProducer(array: Array[String], top: String) {
+
+  val topic = top
+  val stringA = array
   val props = new Properties()
   props.put("bootstrap.servers", "localhost:9092") //I think this is right
-  props.put("client.id", "KafkaProducer")
+  props.put("client.id", "KafkaProducerEx")
   props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
   props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
-  val data = new ProducerRecord[String, String](topic, ip, msg)
-  producer.send(data)
-
-  /* I do something here but I'm not sure what
-  for (nEvents <- Range(0, events)) {
-    val runtime = new Date().getTime()
-    val ip = "localhost:8080"
-    val msg = runtime + "," + nEvents + ",www.example.com," + ip
-    val data = new ProducerRecord[String, String](topic, ip, msg)
-    producer.send(data)
+  val producer = new KafkaProducer[String, String](props)
+  val timeK = System.currentTimeMillis().toString
+  for (e <- stringA) {
+    val r = e.toUpperCase()
+    val t = timeK
+    val pRec = new ProducerRecord[String, String](topic, t, r)
+    producer.send(pRec)
   }
-  */
-  producer.close()
 }
