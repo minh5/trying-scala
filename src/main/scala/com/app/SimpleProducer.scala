@@ -1,12 +1,11 @@
 package com.app
 
-import java.util.{Date, Properties}
+import java.util.Properties
+
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
-import scala.util.Random
 
-class SimpleProducer(array: Array[String], top: String) {
+class SimpleProducer(array: Array[String], topic: String) {
 
-  val topic = top
   val stringA = array
   val props = new Properties()
   props.put("bootstrap.servers", "localhost:9092") //I think this is right
@@ -17,9 +16,9 @@ class SimpleProducer(array: Array[String], top: String) {
   val producer = new KafkaProducer[String, String](props)
   val timeK = System.currentTimeMillis().toString
   for (e <- stringA) {
-    val r = e.toUpperCase()
     val t = timeK
-    val pRec = new ProducerRecord[String, String](topic, t, r)
+    val pRec = new ProducerRecord[String, String](topic, t, e)
     producer.send(pRec)
   }
+  producer.close()
 }

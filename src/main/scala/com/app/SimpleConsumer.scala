@@ -1,30 +1,28 @@
-package com.app //what is this
+package scala.com.app.util
 
-import java.util.concurrent._
-import java.util.{Collections, Properties}
-
-import kafka.consumer.KafkaStream
-import kafka.utils.Logging
-import org.apache.kafka.clients.consumer.{ConsumerConfig, KafkaConsumer}
+import java.util.Properties
+import scala.collection.JavaConversions._
+import org.apache.kafka.clients.consumer.{ConsumerRecords, KafkaConsumer}
 
 
-object SimpleConsumer (topic: String)
-extends App {
+class SimpleConsumer {
 
-  val TOPIC = topic
   val props = new Properties()
   props.put("bootstrap.servers", "localhost:9092")
   props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
   props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-  props.put("group.id", "something")
+  props.put("group.id", "exampleConsumer")
 
   val consumer = new KafkaConsumer[String, String](props)
-  consumer.subscribe(util.Collections.singletonList(TOPIC))
+  val topic = java.util.Collections.singletonList("testTopic")
+  consumer.subscribe(topic)
 
-  while(true){
-    val records=consumer.poll(100)
-    for (record<-records.asScala){
-      println(record)
+  while(true) {
+    val records : ConsumerRecords[String, String] = consumer.poll(100)
+
+    for (record <- records.iterator()) {
+      println("record now")
+      println(record.value())
     }
   }
 }
